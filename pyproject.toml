@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "dbt-ynab"
+version = "0.1.0"
+description = "dbt models for analysis of YNAB budget data"
+authors = ["Tim Vergenz <vergenzt@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+dbt-core = "^1.8.6"
+dbt-duckdb = "^1.8.3"
+shillelagh = {extras = ["genericjsonapi"], version = "^1.2.28"}
+pandas = "^2.2.3"
+sqlalchemy = "^2.0.35"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
