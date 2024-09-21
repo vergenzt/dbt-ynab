@@ -2,23 +2,21 @@ dbt_ynab:
   outputs:
     dev:
       type: duckdb
-
-      # https://github.com/duckdb/dbt-duckdb#writing-to-external-files
       external_root: target/output
-      format: csv
 
-      # https://github.com/duckdb/dbt-duckdb#configuring-dbt-duckdb-plugins
-      plugins:
+      settings:
+        # avoid builtin httpfs extension being autoloaded
+        autoload_known_extensions: false
 
-      - alias: ynab_api
-        # https://github.com/duckdb/dbt-duckdb/blob/master/dbt/adapters/duckdb/plugins/sqlalchemy.py
-        module: sqlalchemy
-        config:
-          connection_url: "shillelagh://"
-          # https://shillelagh.readthedocs.io/en/latest/usage.html#configuration
-          adapter_kwargs:
-            genericjsonapi:
-              request_headers:
-                Authorization: "Bearer {{ env_var('DBT_ENV_SECRET_YNAB_API_TOKEN') }}"
+      extensions:
+      - json
+
+      filesystems:
+      # https://filesystem-spec.readthedocs.io/en/latest/api.html#fsspec.implementations.http.HTTPFileSystem
+      - fs: https
+
+        # https://docs.aiohttp.org/en/stable/client_reference.html#aiohttp.ClientSession.request
+        headers:
+          Authorization: "Bearer {{ env_var('DBT_ENV_SECRET_YNAB_API_TOKEN') }}"
 
   target: dev
