@@ -1,0 +1,6 @@
+packages:
+  - package: calogica/dbt_date
+    version: 0.10.1
+  - package: sdebruyn/dbt_duckdb_utils
+    version: 0.1.1
+sha1_hash: 772dc90a60fdc296a95332c248fbf14e4524a8d8

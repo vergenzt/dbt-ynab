@@ -8,8 +8,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 dbt-core = "^1.8.6"
-dbt-duckdb = "^1.8.3"
-fsspec = {git = "https://github.com/vergenzt/filesystem_spec", rev = "vergenzt/add-http-protocols", extras = ["http"]}
+dbt-duckdb = {git = "https://github.com/vergenzt/dbt-duckdb", rev = "vergenzt/fix-version-check"}
+fsspec = {path = "../filesystem_spec", extras = ["http"], develop = true}
+duckdb = {path = "../duckdb/tools/pythonpkg", develop = true}
 
 [build-system]
 requires = ["poetry-core"]
