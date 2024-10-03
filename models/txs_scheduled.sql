@@ -11,7 +11,7 @@
   case
   when {{dayn}} = {{day0}} then
     -- 15 days later, or EOM (whichever comes first)
-    least({{ dbt.dateadd('day', 15, 'tx_date') }}, {{ eom }})
+    {{ least([ dbt.dateadd('day', 15, 'tx_date'), eom ]) }}
   else
     -- day0 in following month
     {{ dbt.dateadd('day', day0, eom) }}
@@ -38,7 +38,7 @@ with recursive
       {{
         tx_cols(dict(
           tx_series_id='txs.id',
-          tx_date=dbt.cast('date_next', api.Column.translate_type('date')),
+          tx_date=cast('date_next', api.Column.translate_type('date')),
           recurrence=case(recurrences, on='frequency', whens='ynab_label', thens='my_label'),
           amount_cents='amount / 10',
           payee='payee_name',
@@ -46,7 +46,7 @@ with recursive
           account_to='accounts_to.account',
           category='category_name',
           memo='memo',
-          tx_date_first=dbt.cast('date_first', api.Column.translate_type('date')),
+          tx_date_first=cast('date_first', api.Column.translate_type('date')),
         ))
       }}
     from

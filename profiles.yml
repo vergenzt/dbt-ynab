@@ -1,29 +1,39 @@
 dbt_ynab:
   outputs:
     dev:
-      type: duckdb
-      external_root: target/output
+      type: shillelagh
+      adapters:
 
-      settings:
-        # avoid builtin httpfs extension being autoloaded
-        autoload_known_extensions: false
+      - name: genericjsonapi
+        kwargs:
+          request_headers_by_origin:
+            https://api.youneedabudget.com: 
+              Authorization: 'Bearer {{ env_var("DBT_ENV_SECRET_YNAB_API_TOKEN") }}'
 
-      extensions:
-      - json
 
-      filesystems:
 
-      # https://filesystem-spec.readthedocs.io/en/latest/api.html#fsspec.implementations.cached.SimpleCacheFileSystem
-      - fs: simplecache
-        cache_storage: '{{ env_var("PWD") }}/.cache'
-        same_names: true
 
-        target_protocol: https
-        target_options:
+      # type: duckdb
+      # external_root: target/output
 
-          # https://filesystem-spec.readthedocs.io/en/latest/api.html#fsspec.implementations.http.HTTPFileSystem
-          # https://docs.aiohttp.org/en/stable/client_reference.html#aiohttp.ClientSession.request
-          headers:
-            Authorization: 'Bearer {{ env_var("DBT_ENV_SECRET_YNAB_API_TOKEN") }}'
+      # settings:
+      #   # avoid builtin httpfs extension being autoloaded
+      #   autoload_known_extensions: false
+
+      # extensions:
+      # - json
+
+      # filesystems:
+
+      # # https://filesystem-spec.readthedocs.io/en/latest/api.html#fsspec.implementations.cached.SimpleCacheFileSystem
+      # - fs: simplecache
+      #   cache_storage: '{{ env_var("PWD") }}/.cache'
+      #   same_names: true
+
+      #   target_protocol: https
+      #   target_options:
+
+      #     # https://filesystem-spec.readthedocs.io/en/latest/api.html#fsspec.implementations.http.HTTPFileSystem
+      #     # https://docs.aiohttp.org/en/stable/client_reference.html#aiohttp.ClientSession.request
 
   target: dev

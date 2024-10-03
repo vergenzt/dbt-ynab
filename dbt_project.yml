@@ -1,5 +1,5 @@
 name: 'dbt_ynab'
-version: '1.0.0'
+version: '0.1.0'
 
 profile: 'dbt_ynab'
 
@@ -14,10 +14,23 @@ clean-targets:
 - "target"
 - "dbt_packages"
 
-on-run-start:
-- "{{ register_upstream_external_models() }}"
+dispatch:
+- macro_namespace: dbt
+  search_order:
+  - dbt_ynab
+  - dbt_sqlite
+  - dbt
+- macro_namespace: dbt_date
+  search_order:
+  - dbt_ynab
+  - dbt_date
 
 models:
   dbt_ynab:
     +ynab_api_url: https://api.youneedabudget.com/v1/budgets/last-used
     +forecast_max_date: "'2026-01-01'"
+
+    +materialized: ephemeral
+
+    balance_forecasts:
+      +materialized: table

@@ -8,7 +8,7 @@
 {%- set cut_day_str -%}
   substring(credit_accounts.account, {{cut_day_start}}, 2)
 {%- endset %}
-{%- set cut_day_int = dbt.cast(cut_day_str, dbt.type_int()) %}
+{%- set cut_day_int = cast(cut_day_str, dbt.type_int()) %}
 
 {%- set cc_stmt_date -%}
   {%- set tx_date_shifted = dbt.dateadd('day', '-1*'~cut_day_int, 'tx_date') %}

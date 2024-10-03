@@ -3,14 +3,15 @@ name = "dbt-ynab"
 version = "0.1.0"
 description = "dbt models for analysis of YNAB budget data"
 authors = ["Tim Vergenz <vergenzt@gmail.com>"]
+package-mode = false
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-dbt-core = "^1.8.6"
-dbt-duckdb = {git = "https://github.com/vergenzt/dbt-duckdb", rev = "vergenzt/fix-version-check"}
-fsspec = {path = "../filesystem_spec", extras = ["http"], develop = true}
-duckdb = {path = "../duckdb/tools/pythonpkg", develop = true}
+dbt-core = {path = "../dbt-core/core", develop = true}
+dbt-sqlite = {path = "../dbt-sqlite", develop = true}
+dbt-shillelagh = {path = "../dbt-shillelagh", develop = true}
+shillelagh = {git = "https://github.com/vergenzt/shillelagh", rev = "vergenzt/add-request-headers-by-origin", extras = ["genericjsonapi"]}
 
 [build-system]
 requires = ["poetry-core"]
