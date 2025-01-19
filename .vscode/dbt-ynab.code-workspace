@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../dbt-shillelagh"
+		},
+		{
+			"path": "../../dbt-sqlite"
+		},
+		{
+			"path": "../../shillelagh"
+		},
+		{
+			"path": "../../dbt-core"
+		}
+	],
+	"settings": {}
+}
